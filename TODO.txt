@@ -1,0 +1,4 @@
+- blocks should bounce off walls and turn back
+- show user score
+
+Done: 
