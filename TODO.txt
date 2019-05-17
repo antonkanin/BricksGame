@@ -1,4 +1,5 @@
-- blocks should bounce off walls and turn back
-- show user score
+- add restart button
 
 Done: 
+- blocks should bounce off walls and turn back
+- show user score
