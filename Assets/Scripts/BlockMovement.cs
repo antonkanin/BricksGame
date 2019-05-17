@@ -28,7 +28,7 @@ public class BlockMovement : MonoBehaviour
 
     void HandleInput()
     {
-        if (isMoving && Input.GetKeyDown("space"))
+        if (isMoving && (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)))
         {
             isMoving = false;
 
