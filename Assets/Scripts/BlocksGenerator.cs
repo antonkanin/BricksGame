@@ -31,7 +31,6 @@ public class BlocksGenerator : MonoBehaviour
 
     public void GameRestart()
     {
-        BlocksCleanUp();
         InitializeGame();
     }
 
@@ -53,13 +52,6 @@ public class BlocksGenerator : MonoBehaviour
         _currentBlock = baseBlock;
     }
 
-    void BlocksCleanUp()
-    {
-        foreach (Transform child in blocksContainer)
-        {
-            Destroy(child.gameObject);
-        }
-    }
 
     void SpawnBlock()
     {
