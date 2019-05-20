@@ -96,7 +96,7 @@ public class BlocksGenerator : MonoBehaviour
 
     void TryShiftCamera()
     {
-        if (_currentBlock.transform.position.y < 0)
+        if (_currentBlock.transform.position.y < 2.0f)
         {
             return;
         }
