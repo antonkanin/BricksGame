@@ -1,5 +1,7 @@
-- add restart button
+- limit blocks movement from the left and right sides, now they move outside of the screen
+- labels do not work on the mobile device
 
 Done: 
 - blocks should bounce off walls and turn back
 - show user score
+- add restart button
