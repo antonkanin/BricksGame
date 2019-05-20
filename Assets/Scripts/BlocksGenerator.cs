@@ -6,11 +6,15 @@ public class BlocksGenerator : MonoBehaviour
 {
     public GameObject blockPrefab;
 
+    public GameObject baseBlock;
     private GameObject _currentBlock;
 
-    public float spawnPositionY = -4.0f;
+    public Transform blocksContainer;
+
+    public float initialSpawnPositionY = -4.0f;
 
     private float _spawnPositionX;
+    private float _spawnPositionY;
 
     public float yShift = 0.5f;
 
@@ -18,27 +22,55 @@ public class BlocksGenerator : MonoBehaviour
 
     public GameEvent gameOverEvent;
 
+    private bool isGameStarted = false;
+
     void Start()
     {
-        SpawnBlock(false);
+        InitializeGame();
+    }
+
+    public void GameRestart()
+    {
+        BlocksCleanUp();
+        InitializeGame();
+    }
+
+    void Update()
+    {
+        if (!isGameStarted && Input.GetMouseButton(0))
+        {
+            SpawnBlock();
+            isGameStarted = true;
+        }
+    }
+
+    void InitializeGame()
+    {
+        _spawnPositionY = initialSpawnPositionY;
         _spawnPositionX = -1.0f;
-
         scoreSO.value = 0;
+        isGameStarted = false;
+        _currentBlock = baseBlock;
     }
 
-    void SpawnBlockCallback()
+    void BlocksCleanUp()
     {
-        SpawnBlock(true);
+        foreach (Transform child in blocksContainer)
+        {
+            Destroy(child.gameObject);
+        }
     }
 
-    void SpawnBlock(bool isAddScore)
+    void SpawnBlock()
     {
-        var newBlock = Instantiate(blockPrefab, new Vector3(_spawnPositionX, spawnPositionY, 0.0f),
+        var newBlock = Instantiate(blockPrefab, new Vector3(_spawnPositionX, _spawnPositionY, 0.0f),
             Quaternion.identity);
+
+        newBlock.transform.parent = blocksContainer;
 
         var blockMovement = newBlock.GetComponent<BlockMovement>();
 
-        blockMovement.OnStopBlockMovement += SpawnBlockCallback;
+        blockMovement.OnStopBlockMovement += SpawnBlock;
         blockMovement.OnMissedBlock += GameOverCallback;
         blockMovement.isMoving = true;
         blockMovement.movingDirectionX = -1.0f * _spawnPositionX;
@@ -53,16 +85,13 @@ public class BlocksGenerator : MonoBehaviour
             new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
 
         _spawnPositionX *= -1.0f;
-        spawnPositionY += yShift;
+        _spawnPositionY += yShift;
 
         _currentBlock = newBlock;
 
         TryShiftCamera();
 
-        if (isAddScore)
-        {
-            AddScore();
-        }
+        AddScore();
     }
 
     void TryShiftCamera()

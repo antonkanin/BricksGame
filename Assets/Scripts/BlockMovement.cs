@@ -91,6 +91,8 @@ public class BlockMovement : MonoBehaviour
         var fragment = Instantiate(fragmentPrefab, new Vector3(fragmentPosX, pos.y, pos.z),
             Quaternion.identity);
 
+        fragment.transform.parent = transform.parent;
+
         var fragmentScale = fragment.transform.localScale;
         fragment.transform.localScale =
             new Vector3(scale.x / 2.0f * fragmentScale.x * fragmentScaleDelta, fragmentScale.y, fragmentScale.z);
