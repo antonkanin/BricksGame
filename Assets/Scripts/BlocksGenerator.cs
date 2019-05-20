@@ -16,6 +16,8 @@ public class BlocksGenerator : MonoBehaviour
 
     public IntType scoreSO;
 
+    public GameEvent gameOverEvent;
+
     void Start()
     {
         SpawnBlock(false);
@@ -91,5 +93,6 @@ public class BlocksGenerator : MonoBehaviour
     void GameOverCallback()
     {
         Debug.Log("Game over");
+        gameOverEvent.Raise();
     }
 }
